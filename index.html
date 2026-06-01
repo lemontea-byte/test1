@@ -7,8 +7,13 @@
 
 <style>
 body{
-    background:#87CEEB;
-    font-family:Arial, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #ffd6e7 0%,
+        #e6d6ff 50%,
+        #d6f0ff 100%
+    );
+    font-family: Arial, sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -18,12 +23,16 @@ body{
 
 #game{
     width:350px;
-    background:white;
-    border:6px solid #333;
+    background:rgba(255,255,255,0.95);
+    border:6px solid #555;
     border-radius:20px;
     padding:20px;
     text-align:center;
-    box-shadow:0 0 20px rgba(0,0,0,0.3);
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+h1{
+    color:#6a5acd;
 }
 
 #pet{
@@ -46,7 +55,7 @@ body{
 
 .fill{
     height:100%;
-    background:#4CAF50;
+    background:#7ed957;
     transition:0.3s;
 }
 
@@ -57,22 +66,27 @@ button{
     cursor:pointer;
     border:none;
     border-radius:10px;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.05);
 }
 
 .feed{
-    background:#ffcc66;
+    background:#ffd166;
 }
 
 .play{
-    background:#66ccff;
+    background:#7bdff2;
 }
 
 .sleep{
-    background:#cc99ff;
+    background:#cdb4db;
 }
 
 .restart{
-    background:#ff6666;
+    background:#ff8fa3;
     color:white;
 }
 
@@ -80,6 +94,7 @@ button{
     min-height:24px;
     font-weight:bold;
     margin:10px;
+    color:#555;
 }
 </style>
 </head>
