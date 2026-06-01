@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamagotchi Game</title>
+
+<style>
+body{
+    background:#87CEEB;
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+#game{
+    width:350px;
+    background:white;
+    border:6px solid #333;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+#pet{
+    font-size:80px;
+    margin:10px;
+}
+
+.stat{
+    margin:10px 0;
+    font-weight:bold;
+}
+
+.bar{
+    width:100%;
+    height:20px;
+    background:#ddd;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    background:#4CAF50;
+    transition:0.3s;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    font-size:16px;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+}
+
+.feed{
+    background:#ffcc66;
+}
+
+.play{
+    background:#66ccff;
+}
+
+.sleep{
+    background:#cc99ff;
+}
+
+.restart{
+    background:#ff6666;
+    color:white;
+}
+
+#message{
+    min-height:24px;
+    font-weight:bold;
+    margin:10px;
+}
+</style>
+</head>
+<body>
+
+<div id="game">
+
+    <h1>Tamagotchi</h1>
+
+    <div id="pet">🐣</div>
+
+    <div>Age: <span id="age">0</span></div>
+
+    <div class="stat">
+        Hunger
+        <div class="bar">
+            <div class="fill" id="hungerBar"></div>
+        </div>
+    </div>
+
+    <div class="stat">
+        Happiness
+        <div class="bar">
+            <div class="fill" id="happyBar"></div>
+        </div>
+    </div>
+
+    <div class="stat">
+        Energy
+        <div class="bar">
+            <div class="fill" id="energyBar"></div>
+        </div>
+    </div>
+
+    <div id="message">Take care of your pet!</div>
+
+    <button class="feed" onclick="feedPet()">🍎 Feed</button>
+    <button class="play" onclick="playPet()">⚽ Play</button>
+    <button class="sleep" onclick="sleepPet()">😴 Sleep</button>
+
+    <br><br>
+
+    <button class="restart" onclick="restartGame()">Restart</button>
+
+</div>
+
+<script>
+let hunger = 100;
+let happiness = 100;
+let energy = 100;
+let age = 0;
+let alive = true;
+
+function updateBars(){
+    document.getElementById("hungerBar").style.width = hunger + "%";
+    document.getElementById("happyBar").style.width = happiness + "%";
+    document.getElementById("energyBar").style.width = energy + "%";
+
+    document.getElementById("age").textContent = age;
+
+    updatePet();
+
+    if(hunger <= 0 || happiness <= 0 || energy <= 0){
+        gameOver();
+    }
+}
+
+function updatePet(){
+    const pet = document.getElementById("pet");
+
+    if(age < 5){
+        pet.textContent = "🐣";
+    }
+    else if(age < 10){
+        pet.textContent = "🐤";
+    }
+    else{
+        pet.textContent = "🐥";
+    }
+}
+
+function setMessage(text){
+    document.getElementById("message").textContent = text;
+}
+
+function feedPet(){
+    if(!alive) return;
+
+    hunger = Math.min(100, hunger + 25);
+    setMessage("Yum! That was tasty!");
+    updateBars();
+}
+
+function playPet(){
+    if(!alive) return;
+
+    happiness = Math.min(100, happiness + 25);
+    energy = Math.max(0, energy - 10);
+
+    setMessage("That was fun!");
+    updateBars();
+}
+
+function sleepPet(){
+    if(!alive) return;
+
+    energy = Math.min(100, energy + 30);
+    setMessage("Zzz...");
+    updateBars();
+}
+
+function gameOver(){
+    alive = false;
+    document.getElementById("pet").textContent = "💀";
+    setMessage("Game Over! Your pet has passed away.");
+}
+
+function restartGame(){
+    hunger = 100;
+    happiness = 100;
+    energy = 100;
+    age = 0;
+    alive = true;
+
+    setMessage("Take care of your pet!");
+    updateBars();
+}
+
+setInterval(() => {
+
+    if(!alive) return;
+
+    hunger = Math.max(0, hunger - 3);
+    happiness = Math.max(0, happiness - 2);
+    energy = Math.max(0, energy - 1);
+
+    updateBars();
+
+}, 3000);
+
+setInterval(() => {
+
+    if(!alive) return;
+
+    age++;
+
+    updateBars();
+
+}, 10000);
+
+updateBars();
+</script>
+
+</body>
+</html>
